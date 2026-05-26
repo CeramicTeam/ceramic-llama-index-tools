@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "llama-index-tools-ceramic"
-version = "0.1.1"
+version = "0.1.2"
 description = "llama-index tools ceramic integration"
 authors = [{ name = "Ceramic AI", email = "support@ceramic.ai" }]
 requires-python = ">=3.10,<4.0"
