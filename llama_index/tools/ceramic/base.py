@@ -18,25 +18,23 @@ class CeramicToolSpec(BaseToolSpec):
         self.client = Ceramic(api_key=api_key)
 
     def search(self, query: str) -> List[Document]:
-        """Search the Ceramic AI knowledge base. Returns ranked results with titles, URLs, and descriptions.
-
-        Ceramic is a lexical (keyword-based) search engine — it matches exact words, not meaning or intent.
-
-        Ideal Use Cases:
-        - Keyword and entity lookups, technical terms, named people/products/events
-        - Answering questions that require fresh or current information
-
-        Not ideal for: Conversational or natural language questions.
-
-        Query tips:
-        - Use keywords, not full sentences. "2026 Super Bowl halftime performer" not "Who performed at the Super Bowl this year?"
-        - Include explicit synonyms when terminology may vary.
-
-        For best results, rewrite user queries into concise keyword-focused searches before calling this tool.
-        Issuing multiple simpler keyword queries and aggregating the results often outperforms a single complex query.
+        """Search the web using Ceramic.
+        Use for accurate current information — news, prices, recent events, documentation, general fact checking.
+        Returns up to 10 ranked results with titles, URLs, and descriptions.
+        Ceramic matches exact keywords — it does not interpret natural language or synonyms automatically.
+        Query rules:
+        - Queries must be 2-8 words
+        - Include specific entities, topics, locations, and dates
+        - Do not include uninformative words such as articles (the, a, an). Avoid prepositions (on, about, in, for, of, at, by, with) unless they are within established phrases or names (United States of America, Into the Wild).
+        - Keep word order meaningful (`house cat` and `cat house` return different results)
+        - Good keyword query examples:
+            - "2026 Super Bowl halftime performer"
+            - "climate change effects global warming impact"
+            - "beginner investing strategies stocks bonds basics"
+        If the search returns no useful results, retry with a more specific keyword query.
 
         Args:
-            query: A keyword-focused search query. Aim for 2–8 words for best results.
+            query: keyword search query with 2–8 words
         """
         response = self.client.search(query=query)
         return [
